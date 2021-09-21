@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   wordpress-db:
@@ -32,9 +32,11 @@ services:
       WORDPRESS_DB_NAME: wordpress_db
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_DEBUG : true # デバッグモードをONにする
+      WORDPRESS_DEBUG_LOG: true # ログを出力する
 
   phpmyadmin:
-    container_name: phpmyadmin
+    container_name: wordpress_phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
     environment:
       PMA_ARBITRARY: 1
