@@ -24,7 +24,7 @@ services:
       - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
     restart: always
     depends_on:
-      - mysql
+      - wordpress-db
     ports:
       - 8082:80
     environment:
@@ -32,8 +32,8 @@ services:
       WORDPRESS_DB_NAME: wordpress_db
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: root
-      WORDPRESS_DEBUG : true # デバッグモードをONにする
-      WORDPRESS_DEBUG_LOG: true # ログを出力する
+      WORDPRESS_DEBUG : 1 # デバッグモードをONにする
+      WORDPRESS_DEBUG_LOG: 1 # ログを出力する
 
   phpmyadmin:
     container_name: wordpress_phpmyadmin
