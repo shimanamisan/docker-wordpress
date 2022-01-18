@@ -1,0 +1,51 @@
+version: "3.8"
+
+services:
+  wordpress-db:
+    image: mysql:5.7
+    container_name: database-host
+    volumes:
+      - wordpress_db_volume:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass
+      TZ: 'Asia/Tokyo'
+    ports:
+      - 3306:3306
+
+  wordpress:
+    container_name: mywordpress
+    build: ./docker/wordpress
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/php.ini
+    restart: always
+    depends_on:
+      - wordpress-db
+    ports:
+      - 8082:80
+    environment:
+      WORDPRESS_DB_HOST: database-host
+      WORDPRESS_DB_NAME: wordpress_db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: root
+      WORDPRESS_DEBUG : 1 # デバッグモードをONにする
+      WORDPRESS_DEBUG_LOG: 1 # ログを出力する
+
+  phpmyadmin:
+    container_name: wordpress_phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOSTS: database-host
+      PMA_USER: root
+      PMA_PASSWORD: root
+    restart: always
+    ports:
+      - 8092:80
+
+volumes:
+  wordpress_db_volume:
