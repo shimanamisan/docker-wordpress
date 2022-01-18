@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+       {
+         "name": "PHP XDebug",
+         "type": "php",
+         "request": "launch",
+         "port": 9002,
+         "pathMappings": {
+           // docker上のdocument root:ローカルのdocument root
+           "/var/www/html": "${workspaceRoot}/src"
+         },
+         "ignore": ["**/vendor/**/*.php"]
+         "xdebugSettings": {
+           "max_children": 128,
+           "max_data": 1024,
+           "max_depth": 10
+         }
+       }
+    ]
+}
